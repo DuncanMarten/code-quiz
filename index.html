@@ -8,7 +8,7 @@
 </head>
 <body>
     <header>
-        <button class="highscore" id="highscore">View High Scores</button>
+        <button class="highscore" id="high-btn">View High Scores</button>
         <div class="timeleft" id="timeleft"></div>
     </header>
     <div class="container">
@@ -19,10 +19,15 @@
                 <div class="choice" id="B" onclick="checkAnswer('B')"></div>
                 <div class="choice" id="C" onclick="checkAnswer('C')"></div>
                 <div class="choice" id="D" onclick="checkAnswer('D')"></div>
+            <div id="status" class="status"></div>
         </div>
-        <div class="controls" style="display: block;">
+        <div class="controls" id="start-container" style="display: block;">
+            <h1>Coding Quiz</h1>
+            <p>Try to answer the following questions correctly within the time limit. </br>
+            Keep in mind that incorrect answers result in a 10 second/score penalty.</p>
             <button id="start-btn" class="start-btn btn">Start Quiz</button>
         </div>
+        <div class="highscores" id="highscores-container" style="display: none;"></div>
     </div>
     
 
