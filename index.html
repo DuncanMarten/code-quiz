@@ -12,11 +12,15 @@
         <div class="timeleft" id="timeleft"></div>
     </header>
     <div class="container">
-        <div id="question-container" class="hide">
+        <div id="question-container" style="display: none;">
             <div id="question">Question</div>
             <div id="answer-buttons"></div>
+                <div class="choice" id="A" onclick="checkAnswer('A')"></div>
+                <div class="choice" id="B" onclick="checkAnswer('B')"></div>
+                <div class="choice" id="C" onclick="checkAnswer('C')"></div>
+                <div class="choice" id="D" onclick="checkAnswer('D')"></div>
         </div>
-        <div class="controls">
+        <div class="controls" style="display: block;">
             <button id="start-btn" class="start-btn btn">Start Quiz</button>
         </div>
     </div>
