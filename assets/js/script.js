@@ -108,17 +108,21 @@ var selectAns = function(event) {
 
 // Check to see if answer selected is correct
 var checkAnswer = function() {
+    // questions left and correct answer
     if (selectAns(event) === myquestions[runningQuest].correctAnswer && runningQuest < lastQuest) {
         runningQuest++;
         renderQuest();
+        statusEL.innerHTML = "<p class='correct'> Correct </p>";
     }
+    // no questions left and correct answer
     else if (selectAns(event) === myquestions[runningQuest].correctAnswer && runningQuest === lastQuest) {
         clearInterval(myInterval);
         createHigh();
     }
+    // incorrect answer
     else{
         timeLeft = timeLeft - 10;
-        statusEL.innerHTML = "<p class='incorrect'> Incorrect </p>"
+        statusEL.innerHTML = "<p class='incorrect'> Incorrect </p>";
     }
 }
 
@@ -126,61 +130,80 @@ var checkAnswer = function() {
 var createHigh = function(highscore) {
     highscoreEl.setAttribute("style", "display: block;")
     questionContainerEl.setAttribute("style", "display: none;");
+    
+    // Score is time left and code to ask for initials
     var yourScore = timeLeft;
     highscoreEl.innerHTML = "<h2>All Done!</h2><p>Your final score is " + yourScore + ".</p><p>Please in your initials: <input name='initials'></input><button id='submit'>Submit</button></p>";
     
+    // Submit Results
     var submitBtn = document.querySelector("#submit");
     submitBtn.addEventListener("click", setHigh);
 }  
     
-
+// Set results as highscore
 var setHigh = function(){
+    // Variables for storage
     var yourScore = timeLeft;
     var initialsInput = document.querySelector("input[name='initials']").value;
     
-    console.log(initialsInput);
+    // Store initials and score in local storage
     localStorage.setItem("Initials", JSON.stringify(initialsInput));
     localStorage.setItem("Scores", JSON.stringify(yourScore));
+    
+    // view high scores
     viewHigh();
 }
 
 // View highscores
 var viewHigh = function(){
+    // Pull score and initials out of storage
     var score = localStorage.getItem("Scores");
     var initials = localStorage.getItem("Initials");
 
+    // if there is no items in storage, no viewing highscores
     if (!score || !initials) {
         return false;
     }
 
+    // parse out score and initials
     score = JSON.parse(score);
     initials = JSON.parse(initials);
 
+    // Bring up highscore element
     startContainerEl.setAttribute("style", "display: none;");
     highscoreEl.setAttribute("style", "display: block;")
     questionContainerEl.setAttribute("style", "display: none;");
 
+    // set innerHTML to show score and initials
     highscoreEl.innerHTML = "<h2>High Scores</h2><div class='score'> " + score + " " + initials + "</div><div id='buttons'><button id='back'>Back</button><button id='clear'>Clear</button>"; 
     
+    // clear button
     var clearBtn = document.querySelector("#clear");
     clearBtn.addEventListener("click", clearHigh);
 
+    // back/reset button
     var backBtn = document.querySelector("#back");
     backBtn.addEventListener("click", reset);
 }
 
+// clear local storage
 var clearHigh = function() {
     localStorage.clear();
 }
 
+// go back to the start of quiz
 var reset = function(){
+    // resetting variables 
     timeLeft = 60;
     runningQuest = 0;
+
+    // bringing up start container element
     startContainerEl.setAttribute("style", "display: block;");
     highscoreEl.setAttribute("style", "display: none;")
     questionContainerEl.setAttribute("style", "display: none;");
 }
 
+// event listeners
 startBtn.addEventListener("click", startQuiz);
 questionContainerEl.addEventListener("click", selectAns);
 highscoreBtnEl.addEventListener("click", viewHigh);
