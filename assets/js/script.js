@@ -154,10 +154,15 @@ var setHigh = function(){
     var yourScore = timeLeft;
     var initialsInput = document.querySelector("input[name='initials']").value;
     
+    var highscore = localStorage.getItem("Scores");
+    highscore = JSON.parse(highscore);
+
     // Store initials and score in local storage
-    localStorage.setItem("Initials", JSON.stringify(initialsInput));
-    localStorage.setItem("Scores", JSON.stringify(yourScore));
-    
+    if (yourScore > highscore){
+        localStorage.setItem("Initials", JSON.stringify(initialsInput));
+        localStorage.setItem("Scores", JSON.stringify(yourScore));
+    }
+
     // view high scores
     viewHigh();
 }
@@ -181,7 +186,7 @@ var viewHigh = function(){
     startContainerEl.setAttribute("style", "display: none;");
     highscoreEl.setAttribute("style", "display: block;")
     questionContainerEl.setAttribute("style", "display: none;");
-    highscoreBtnEl.setAttribute("style", "display: block;")
+    highscoreBtnEl.setAttribute("style", "display: block;");
 
     // set innerHTML to show score and initials
     highscoreEl.innerHTML = "<h2>High Scores</h2><div class='score'><p>" + score + " " + initials + "</p></div><div id='buttons'><button class='back-btn btn' id='back'>Back</button><button class='clear-btn btn' id='clear'>Clear</button>"; 
