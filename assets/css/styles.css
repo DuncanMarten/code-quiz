@@ -9,11 +9,42 @@
     justify-content: center;
     align-items: center;
     width: 100vw;
-    height: 100vh;
+    height: 80vh;
 }
 
 header {
     margin: 18px;
+}
+
+h1 {
+    font-size: 48px;
+}
+
+h2 {
+    font-size: 40px;
+}
+
+p, input {
+    font-size: 30px;
+}
+
+.controls {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.btn {
+    background-color: #111d4a;
+    color: white;
+    border-radius: 12px;
+    padding: 5px;
+    font-size: 30px;
+    outline: none;
+}
+
+.btn:hover {
+    background-color: #b14aed;
 }
 
 .highscore {
@@ -31,12 +62,21 @@ header {
     font-family: Arial, Helvetica, sans-serif;
 }
 
-.controls {
-    display: flex;
-    justify-content: center;
-    align-items: center;
+.choice {
+    margin: 5px;
+    width: 50%;
 }
 
-.hide {
-    display: none;
+.correct {
+    color: green;
+    border-top: 1px solid grey;
+}
+
+.incorrect {
+    color: red;
+    border-top: 1px solid grey;
+}
+
+.back-btn, .clear-btn {
+    font-size: 24px;
 }

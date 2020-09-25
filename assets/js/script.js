@@ -70,6 +70,7 @@ var countdown = function() {
         }
         else {
             timeLeft = 0;
+            createHigh();
         }
         return timeLeft;
     }, 1000);
@@ -94,8 +95,9 @@ var renderQuest = function() {
 // Starts the quiz
 var startQuiz = function() {
     startContainerEl.setAttribute("style", "display: none;");
-    renderQuest();
     questionContainerEl.setAttribute("style", "display: block;");
+    highscoreBtnEl.setAttribute("style", "display: none;")
+    renderQuest();
     countdown();
 }
 
@@ -127,13 +129,19 @@ var checkAnswer = function() {
 }
 
 // Create a highscore
-var createHigh = function(highscore) {
+var createHigh = function() {
+    // brings highscore container in
     highscoreEl.setAttribute("style", "display: block;")
     questionContainerEl.setAttribute("style", "display: none;");
     
+
     // Score is time left and code to ask for initials
     var yourScore = timeLeft;
-    highscoreEl.innerHTML = "<h2>All Done!</h2><p>Your final score is " + yourScore + ".</p><p>Please in your initials: <input name='initials'></input><button id='submit'>Submit</button></p>";
+    if (timeLeft === 0) {
+        timeLeft = 0;
+        clearInterval(myInterval);
+    }
+    highscoreEl.innerHTML = "<h2>All Done!</h2><p>Your final score is " + yourScore + ".</p><p>Please in your initials: <input name='initials'></input><button class='submit-btn btn' id='submit'>Submit</button></p>";
     
     // Submit Results
     var submitBtn = document.querySelector("#submit");
@@ -173,9 +181,10 @@ var viewHigh = function(){
     startContainerEl.setAttribute("style", "display: none;");
     highscoreEl.setAttribute("style", "display: block;")
     questionContainerEl.setAttribute("style", "display: none;");
+    highscoreBtnEl.setAttribute("style", "display: block;")
 
     // set innerHTML to show score and initials
-    highscoreEl.innerHTML = "<h2>High Scores</h2><div class='score'> " + score + " " + initials + "</div><div id='buttons'><button id='back'>Back</button><button id='clear'>Clear</button>"; 
+    highscoreEl.innerHTML = "<h2>High Scores</h2><div class='score'><p>" + score + " " + initials + "</p></div><div id='buttons'><button class='back-btn btn' id='back'>Back</button><button class='clear-btn btn' id='clear'>Clear</button>"; 
     
     // clear button
     var clearBtn = document.querySelector("#clear");
