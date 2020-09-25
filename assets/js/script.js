@@ -57,9 +57,9 @@ var dEl = document.querySelector("#D");
 var statusEL = document.querySelector("#status");
 var highscoreEl = document.querySelector("#highscores-container");
 
+
 var timeLeft = 60;
 var myInterval;
-var highscores = [];
 
 // Timer
 var countdown = function() {
@@ -128,24 +128,57 @@ var createHigh = function(highscore) {
     questionContainerEl.setAttribute("style", "display: none;");
     var yourScore = timeLeft;
     highscoreEl.innerHTML = "<h2>All Done!</h2><p>Your final score is " + yourScore + ".</p><p>Please in your initials: <input name='initials'></input><button id='submit'>Submit</button></p>";
-    var initialsInput = document.querySelector("input[name='initials']").value;
-    var highscore = {
-        initials: initialsInput,
-        score: yourScore
-    };
-    highscores.push(highscore);
+    
     var submitBtn = document.querySelector("#submit");
     submitBtn.addEventListener("click", setHigh);
 }  
     
 
 var setHigh = function(){
-    localStorage.setItem("HighScores", JSON.stringify(highscores));
+    var yourScore = timeLeft;
+    var initialsInput = document.querySelector("input[name='initials']").value;
+    
+    console.log(initialsInput);
+    localStorage.setItem("Initials", JSON.stringify(initialsInput));
+    localStorage.setItem("Scores", JSON.stringify(yourScore));
+    viewHigh();
 }
 
 // View highscores
 var viewHigh = function(){
+    var score = localStorage.getItem("Scores");
+    var initials = localStorage.getItem("Initials");
 
+    if (!score || !initials) {
+        return false;
+    }
+
+    score = JSON.parse(score);
+    initials = JSON.parse(initials);
+
+    startContainerEl.setAttribute("style", "display: none;");
+    highscoreEl.setAttribute("style", "display: block;")
+    questionContainerEl.setAttribute("style", "display: none;");
+
+    highscoreEl.innerHTML = "<h2>High Scores</h2><div class='score'> " + score + " " + initials + "</div><div id='buttons'><button id='back'>Back</button><button id='clear'>Clear</button>"; 
+    
+    var clearBtn = document.querySelector("#clear");
+    clearBtn.addEventListener("click", clearHigh);
+
+    var backBtn = document.querySelector("#back");
+    backBtn.addEventListener("click", reset);
+}
+
+var clearHigh = function() {
+    localStorage.clear();
+}
+
+var reset = function(){
+    timeLeft = 60;
+    runningQuest = 0;
+    startContainerEl.setAttribute("style", "display: block;");
+    highscoreEl.setAttribute("style", "display: none;")
+    questionContainerEl.setAttribute("style", "display: none;");
 }
 
 startBtn.addEventListener("click", startQuiz);
